@@ -13,7 +13,7 @@ var pitch: float = 0.0
 
 @onready var camera: Camera3D = $Camera
 @onready var raycast: RayCast3D = $Camera/RayCast
-@onready var world: Node = get_node_or_null(world_path)
+@onready var world: BlockWorld = get_node_or_null(world_path) as BlockWorld
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -28,6 +28,13 @@ func _unhandled_input(event: InputEvent) -> void:
 
 	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+	if event is InputEventMouseButton and event.pressed and Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		return
+
+	if Input.mouse_mode != Input.MOUSE_MODE_CAPTURED:
+		return
 
 	if event.is_action_pressed("break_block"):
 		break_targeted_block()
@@ -65,7 +72,7 @@ func break_targeted_block() -> void:
 	var hit_point: Vector3 = raycast.get_collision_point()
 	var hit_normal: Vector3 = raycast.get_collision_normal()
 	var hit_cell := world_to_cell(hit_point - hit_normal * 0.01)
-	world.call("remove_block", hit_cell)
+	world.remove_block(hit_cell)
 
 func place_adjacent_block() -> void:
 	if world == null:
@@ -78,7 +85,7 @@ func place_adjacent_block() -> void:
 	var hit_point: Vector3 = raycast.get_collision_point()
 	var hit_normal: Vector3 = raycast.get_collision_normal()
 	var target_cell := world_to_cell(hit_point + hit_normal * 0.01)
-	world.call("place_block", target_cell)
+	world.place_block(target_cell)
 
 func world_to_cell(world_position: Vector3) -> Vector3i:
 	return Vector3i(floori(world_position.x), floori(world_position.y), floori(world_position.z))

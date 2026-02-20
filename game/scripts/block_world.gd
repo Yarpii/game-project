@@ -1,3 +1,4 @@
+class_name BlockWorld
 extends Node3D
 
 @export var block_scene: PackedScene
@@ -10,10 +11,17 @@ var blocks: Dictionary = {}
 func _ready() -> void:
 	generate_flat_ground()
 
+func is_in_bounds(cell: Vector3i) -> bool:
+	return cell.x >= 0 and cell.x < size_x \
+		and cell.y >= 0 and cell.y < size_y \
+		and cell.z >= 0 and cell.z < size_z
+
 func has_block(cell: Vector3i) -> bool:
 	return blocks.has(cell)
 
 func place_block(cell: Vector3i) -> bool:
+	if not is_in_bounds(cell):
+		return false
 	if has_block(cell):
 		return false
 	if block_scene == null:
