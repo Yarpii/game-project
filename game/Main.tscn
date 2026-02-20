@@ -10,6 +10,7 @@
 block_scene = ExtResource("3")
 
 [node name="Player" type="CharacterBody3D" parent="." script=ExtResource("1")]
+world_path = NodePath("../BlockWorld")
 
 [node name="Camera" type="Camera3D" parent="Player"]
 current = true
