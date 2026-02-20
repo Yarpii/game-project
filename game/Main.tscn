@@ -1,0 +1,11 @@
+[gd_scene format=3]
+
+[node name="Main" type="Node3D"]
+
+[node name="BlockWorld" type="Node3D" parent="."]
+
+[node name="Player" type="CharacterBody3D" parent="."]
+
+[node name="Camera" type="Camera3D" parent="Player"]
+
+[node name="RayCast" type="RayCast3D" parent="Player/Camera"]
