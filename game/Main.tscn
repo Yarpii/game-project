@@ -1,11 +1,14 @@
-[gd_scene format=3]
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1"]
 
 [node name="Main" type="Node3D"]
 
 [node name="BlockWorld" type="Node3D" parent="."]
 
-[node name="Player" type="CharacterBody3D" parent="."]
+[node name="Player" type="CharacterBody3D" parent="." script=ExtResource("1")]
 
 [node name="Camera" type="Camera3D" parent="Player"]
+current = true
 
 [node name="RayCast" type="RayCast3D" parent="Player/Camera"]
