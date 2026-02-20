@@ -20,7 +20,7 @@ func place_block(cell: Vector3i) -> bool:
 		return false
 
 	var block: Node3D = block_scene.instantiate()
-	block.position = Vector3(cell.x, cell.y, cell.z)
+	block.position = Vector3(cell.x + 0.5, cell.y + 0.5, cell.z + 0.5)
 	add_child(block)
 	blocks[cell] = block
 	return true
